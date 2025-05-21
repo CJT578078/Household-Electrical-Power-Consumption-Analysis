@@ -29,11 +29,30 @@ Can we accurately predict household active power consumption based on time-relat
 This archive contains 2075259 measurements gathered in a house located in Sceaux (7km of Paris, France) between December 2006 and November 2010 (47 months).
 
 **Cleaning and Preprocessing** 
-The date and time are merged together to represent a specific moment that is inclusive of both date and time. Several columns of data which should be numerical were not and were thus converted. Redundant columns are dropped as well as any rows missing data. 
 
+The date and time are merged together to represent a specific moment that is inclusive of both date and time. Several columns of data which should be numerical were not and were thus converted. Redundant columns are dropped as well as any rows missing data. Data that sticks out too much, known as outliers, is removed to prevent it from skewing our models that may be sensitive to such things. 
 
+New features are created to extract more information from the dataset. A training and holdout(test) set is created to be used to evaluate the predictive models. 
 
 #### Methodology
+
+Models are trained using the training set and validated with the test set. Pipeline objects were created to make implementation cleaner. GridSearchCV is also used to evaluate models using their mean squared error while also tuning their hyperparameters to maximize their mean squared error. 
+
+Three regression models were trained. 
+
+*Linear Regression Model:* A pipeline object is created to encode some columns that are numbered in a way that might skew the data, scale the data, and create a linear regresssion model. Linear regression was chosen as a baseline model used to understand linear relationships between input features (e.g., voltage, current, sub-metered usage) and the target variable Global_active_power. Its simplicity provides a benchmark for comparison.
+
+*Ridge Regression Model:* A pipeline object is created to encode some columns that are numbered in a way that might skew the data, scale the data, and create a ridge regresssion model. GridSearchCV is used to hypertune the parameter alpha, with the best parameter being 0.1 out of the options [0.1, 0.5, 1, 3, 5]. Ridge regression is an extension of linear regression with L2 regularization. Ridge regression helps prevent overfitting and handles multicollinearity between features, especially useful for high-dimensional or correlated data.
+
+*RandomForestRegressor Model:* A pipeline object is created to encode some columns that are numbered in a way that might skew the data and create a RandomForestRegressor model. GridSearchCV is used to hypertune the parameters n_estimators and max_depth, with the best being 100 and 10 respectively out of the options [50, 75, 100] and [5, 7, 10]. RandomForestRegressor is an ensemble model that uses multiple decision trees to capture non-linear relationships and feature interactions. It typically performs well on structured data and is robust to noise and overfitting.
+
+Model performances are evaluated by comparing the root mean squared error of the training set vs the root mean squared error of the test set. 
+
+*Auto Arima Model:*  The data which is sampled every minute is resampled to every day. This is done to lower the requirements of available memory and training time. Boxcox is used to transform the data to have a normal distribution. The Augmented Dickey-Fuller test is used to evalute if our data is stationary. Auto ARIMA picks the best parameters p, d, and q based on minimizing information criteria such as AIC. A seasonal period of 7 is chosen to represent the days in the week. Using the model, we are able to forecast global_active_power used at certain time. After converting the data back to how it was before applying Boxcox, we evalute the model by evaluating for far the root mean squared error is from the mean of the target variable. 
+
+Graphs are made to display the ARIMA Forcast vs what the actual results are and to display the residuals (the difference between the original values and the forecasted values). 
+
+Exploratory Data Analysis (EDA) is performed on the data to find various insights such as average global power used per hour over the course of a day and the average daily energy usage by day of the week. Finally, a graph breaking down the monthly average energy usage per sub-metering is shown.
 
 
 #### Results
@@ -43,9 +62,9 @@ The date and time are merged together to represent a specific moment that is inc
 
 #### Outline of project
 
-- [Link to notebook 1]()
-- [Link to notebook 2]()
-- [Link to notebook 3]()
-
+- [Link to notebook]()
+- [Link to dataset]()
 
 ##### Contact and Further Information
+Cameron Tsai
+ctsai081@ucr.edu 
