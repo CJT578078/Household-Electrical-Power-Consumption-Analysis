@@ -73,7 +73,7 @@ Additional models could be tested and compared to further improve performance an
 
 #### Outline of project
 
-- [Link to notebook]()
+- [Link to notebook](https://github.com/CJT578078/Household-Electrical-Power-Consumption-Analysis/blob/main/Capstone_Analysis.ipynb)
 - [Link to dataset]()
 
 ##### Contact and Further Information
