@@ -57,8 +57,19 @@ Exploratory Data Analysis (EDA) is performed on the data to find various insight
 
 #### Results
 
+The best predictive model ended up being our baseline model, the Linear Regression model. It only outperformed the ridge regression model by a slight margin. Linear Regression Test RMSE: 0.040222263499 as opposed to  Ridge Regression Test RMSE: 0.0402222636758. The RandomForestRegressor model unfortunately may suffer from some overfitting as seen with its training set outperforming its test set (RandomForestReg Train RMSE: 0.034496326424 vs RandomForestReg Test RMSE: 0.0346498793184).
+
+The Auto ARIMA model seemed to get caught at the average as most of the forecast formed a straight line through the actual Global_Active_Power data. 
+
+Observing the data, it seems that electrical usage has a minor peak from 7 AM to 10 AM, with a major peak from 6 PM to 9 PM. Intuitively, this makes sense as these represent times outside the typical 9 AM - 5 PM work schedule. Average daily usage peaks on the Saturday with Sunday following closely after. 
 
 #### Next steps
+
+The current dataset only represents a single household over a few years. To improve the robustness and applicability of the models, incorporate data from multiple households with diverse usage patterns, geographies, and household sizes.
+
+Including more features such as weather, can have an improved effect on the predictive capabilites of our models. Other features like holidays when families would stay at home or conversely go out on a trip, can also prove to be effective at improving predictive capabilities. 
+
+Additional models could be tested and compared to further improve performance and interpretability. Gradient Boosting models for improved accuracy and better handling of non-linearity. Neural networks, particularly LSTM or GRU models, which are well-suited for capturing complex temporal dependencies in time series data.
 
 #### Outline of project
 
